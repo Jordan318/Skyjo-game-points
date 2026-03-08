@@ -801,10 +801,19 @@ function showWinner() {
   vibe([50,30,50,30,100]);
   launchConfetti();
 }
+  
 function replayGame() {
   rounds = [];
-  showScreen('screen-game');
-  startRound();
+  currentGameName = '';
+  showConfirm('🔄 Rejouer', 'Nom de la partie ?', function() {
+    var inp = document.getElementById('replay-name-input');
+    currentGameName = inp ? inp.value.trim() : '';
+    showScreen('screen-game');
+    startRound();
+  }, 'Commencer', 'Annuler');
+  // Inject input into dialog
+  var msg = document.getElementById('dialog-message');
+  msg.innerHTML = '<input id="replay-name-input" type="text" placeholder="Ex: Revanche…" maxlength="30" autocomplete="off" style="width:100%;padding:11px 14px;border:2px solid var(--border);border-radius:12px;font-size:0.95rem;font-weight:700;background:var(--input-bg);color:var(--text);outline:none;margin-top:8px">';
 }
 
 // ===== RESTART =====
